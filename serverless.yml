@@ -33,7 +33,7 @@ functions:
     handler: bin/add_default_review
     events:
       - httpApi:
-          path: default-review
+          path: /default-review
           method: post
 
   get_all_default_reviews:
@@ -47,7 +47,7 @@ functions:
     handler: bin/remove_default_review
     events:
       - httpApi:
-          path: /default-reviews/{id}
+          path: /default-review/{id}
           method: delete
 
   add_review:
@@ -77,6 +77,13 @@ functions:
       - httpApi:
           path: /review
           method: delete
+
+  vote_review:
+    handler: bin/vote_review
+    events:
+      - httpApi:
+          path: /review/vote/{id}
+          method: patch
           
 resources:
   Resources:
