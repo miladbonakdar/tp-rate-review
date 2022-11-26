@@ -2,14 +2,14 @@
 
 build: clean-bin gomodgen
 	export GO111MODULE=on
-	env GOARCH=amd64 GOOS=linux go build -ldflags="-s -w" -o bin/add_default_review handlers/default_review/add/handler.go
-	env GOARCH=amd64 GOOS=linux go build -ldflags="-s -w" -o bin/get_all_default_reviews handlers/default_review/get_all/handler.go
-	env GOARCH=amd64 GOOS=linux go build -ldflags="-s -w" -o bin/remove_default_review handlers/default_review/remove/handler.go
-	env GOARCH=amd64 GOOS=linux go build -ldflags="-s -w" -o bin/add_review handlers/review/add/handler.go
-	env GOARCH=amd64 GOOS=linux go build -ldflags="-s -w" -o bin/get_batch_reviews handlers/review/get_batch/handler.go
-	env GOARCH=amd64 GOOS=linux go build -ldflags="-s -w" -o bin/get_user_reviews handlers/review/get_user/handler.go
-	env GOARCH=amd64 GOOS=linux go build -ldflags="-s -w" -o bin/remove_review handlers/review/remove/handler.go
-	env GOARCH=amd64 GOOS=linux go build -ldflags="-s -w" -o bin/vote_review handlers/review/vote/handler.go
+	env GOARCH=amd64 GOOS=linux go build -ldflags="-s -w" -o bin/add_default_review default_review/handlers/add/main.go
+	env GOARCH=amd64 GOOS=linux go build -ldflags="-s -w" -o bin/get_all_default_reviews default_review/handlers/get_all/main.go
+	env GOARCH=amd64 GOOS=linux go build -ldflags="-s -w" -o bin/remove_default_review default_review/handlers/remove/main.go
+	env GOARCH=amd64 GOOS=linux go build -ldflags="-s -w" -o bin/add_review review/handlers/add/main.go
+	env GOARCH=amd64 GOOS=linux go build -ldflags="-s -w" -o bin/get_batch_reviews review/handlers/get_batch/main.go
+	env GOARCH=amd64 GOOS=linux go build -ldflags="-s -w" -o bin/get_user_reviews review/handlers/get_user/main.go
+	env GOARCH=amd64 GOOS=linux go build -ldflags="-s -w" -o bin/remove_review review/handlers/remove/main.go
+	env GOARCH=amd64 GOOS=linux go build -ldflags="-s -w" -o bin/vote_review review/handlers/vote/main.go
 
 clean:
 	rm -rf ./bin ./vendor go.sum
