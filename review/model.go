@@ -9,5 +9,4 @@ type ReviewModel struct {
 	From    string `json:"from"`
 	Date    string `json:"date"`
 	Session string `json:"session,omitempty"`
-	Vote    uint8  `json:"vote"`
 }

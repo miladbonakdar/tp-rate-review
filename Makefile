@@ -9,7 +9,6 @@ build: clean-bin gomodgen
 	env GOARCH=amd64 GOOS=linux go build -ldflags="-s -w" -o bin/get_batch_reviews review/handlers/getbatch/main.go
 	env GOARCH=amd64 GOOS=linux go build -ldflags="-s -w" -o bin/get_user_reviews review/handlers/getuser/main.go
 	env GOARCH=amd64 GOOS=linux go build -ldflags="-s -w" -o bin/remove_review review/handlers/remove/main.go
-	env GOARCH=amd64 GOOS=linux go build -ldflags="-s -w" -o bin/vote_review review/handlers/vote/main.go
 
 clean:
 	rm -rf ./bin ./vendor go.sum

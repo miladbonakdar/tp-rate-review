@@ -77,13 +77,6 @@ functions:
       - httpApi:
           path: /review
           method: delete
-
-  vote_review:
-    handler: bin/vote_review
-    events:
-      - httpApi:
-          path: /review/vote/{pk}/{sk}
-          method: patch
           
 resources:
   Resources:
