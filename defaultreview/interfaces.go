@@ -1,4 +1,4 @@
-package default_review
+package defaultreview
 
 import "github.com/miladbonakdar/tp-rate-review/models"
 
