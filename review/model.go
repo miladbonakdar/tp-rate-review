@@ -1,9 +1,8 @@
 package review
 
-import "github.com/miladbonakdar/tp-rate-review/models"
-
 type ReviewModel struct {
-	key     models.HashRange
+	PK      string `json:"pk"`
+	SK      string `json:"sk"`
 	Rate    uint8  `json:"rate"`
 	Review  string `json:"review"`
 	From    string `json:"from"`

@@ -6,21 +6,21 @@ import (
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
 	"github.com/miladbonakdar/tp-rate-review/logger"
-	"github.com/miladbonakdar/tp-rate-review/models"
 	"go.uber.org/zap"
 )
 
 type DefaultReviewModel struct {
-	Key         models.HashRange
+	PK          string `json:"pk"`
+	SK          string `json:"sk"`
 	Rate        uint8  `json:"rate"`
 	Review      string `json:"review"`
 	Order       int    `json:"order"`
-	Description string `json:"description,omitempty"`
+	Description string `json:"description"`
 }
 
 func (d *DefaultReviewModel) LoadKeys() {
-	d.Key.PK = fmt.Sprintf(pkFormat, d.Rate)
-	d.Key.SK = fmt.Sprintf(skFormat, d.Order, d.Review)
+	d.PK = fmt.Sprintf(pkFormat, d.Rate)
+	d.SK = fmt.Sprintf(skFormat, d.Order, d.Review)
 }
 
 func NewDefaultReviewModel(item map[string]*dynamodb.AttributeValue) *DefaultReviewModel {

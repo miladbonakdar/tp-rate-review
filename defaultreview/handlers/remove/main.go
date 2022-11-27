@@ -12,7 +12,7 @@ func Handler(request events.APIGatewayProxyRequest) (utils.Response, error) {
 	paramPk := request.PathParameters["pk"]
 	paramSk := request.PathParameters["sk"]
 
-	key := models.HashRange{
+	key := models.HashRangeKey{
 		PK: paramPk,
 		SK: paramSk,
 	}

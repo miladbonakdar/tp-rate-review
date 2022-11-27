@@ -7,8 +7,10 @@ provider:
   runtime: go1.x
   stage: dev
   region: eu-west-1
-  timeout: 1
   environment: ${file(env.${opt:stage, self:provider.stage}.yml)}
+  httpApi:
+    metrics: true
+  timeout: 1
   iam:
     role:
       statements:

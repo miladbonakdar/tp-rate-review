@@ -16,7 +16,7 @@ clean:
 clean-bin:
 	rm -rf ./bin
 
-deploy: clean build
+deploy: build
 	sls deploy --verbose
 
 gomodgen:

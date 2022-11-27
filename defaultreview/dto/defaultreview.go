@@ -2,20 +2,21 @@ package dto
 
 import (
 	"github.com/miladbonakdar/tp-rate-review/defaultreview"
-	"github.com/miladbonakdar/tp-rate-review/models"
 )
 
 type DefaultReviewDto struct {
-	Key         models.HashRange
+	PK          string `json:"pk"`
+	SK          string `json:"sk"`
 	Rate        uint8  `json:"rate"`
 	Review      string `json:"review"`
 	Order       int    `json:"order"`
-	Description string `json:"description,omitempty"`
+	Description string `json:"description"`
 }
 
 func DefaultReviewDtoFromModel(r *defaultreview.DefaultReviewModel) *DefaultReviewDto {
 	return &DefaultReviewDto{
-		Key:         r.Key,
+		SK:          r.SK,
+		PK:          r.PK,
 		Rate:        r.Rate,
 		Review:      r.Review,
 		Order:       r.Order,

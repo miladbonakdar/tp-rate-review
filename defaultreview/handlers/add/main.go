@@ -1,8 +1,6 @@
 package main
 
 import (
-	"errors"
-
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/miladbonakdar/tp-rate-review/defaultreview"
@@ -17,11 +15,11 @@ func Handler(request events.APIGatewayProxyRequest) (utils.Response, error) {
 	req, err := dto.NewCreateDefaultReview(request.Body)
 
 	if err != nil {
-		return utils.NewBadRequestRes(err.Error()), err
+		return utils.NewBadRequestRes(err.Error()), nil
 	}
 
 	if message := req.Validate(); message != "" {
-		return utils.NewBadRequestRes(message), errors.New(message)
+		return utils.NewBadRequestRes(message), nil
 	}
 
 	model := req.ToDefaultReviewModel()

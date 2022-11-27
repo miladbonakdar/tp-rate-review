@@ -12,7 +12,12 @@ func Handler(request events.APIGatewayProxyRequest) (utils.Response, error) {
 	paramRate := request.PathParameters["rate"]
 	val, err := utils.ParseToUint8(paramRate)
 	if err != nil {
-		return utils.NewBadRequestRes(err.Error()), err
+		return utils.NewBadRequestRes(err.Error()), nil
+	}
+
+	if val < 1 || val > 5 {
+		errorMessage := "Rate is not valid, [1,5] range"
+		return utils.NewBadRequestRes(errorMessage), nil
 	}
 
 	repo := defaultreview.NewRepo()

@@ -7,10 +7,12 @@ import (
 )
 
 type CreateDefaultReview struct {
+	PK          string `json:"pk"`
+	SK          string `json:"sk"`
 	Rate        uint8  `json:"rate"`
 	Order       int    `json:"order"`
 	Review      string `json:"review"`
-	Description string `json:"description,omitempty"`
+	Description string `json:"description"`
 }
 
 func (c CreateDefaultReview) Validate() string {
@@ -24,13 +26,16 @@ func (c CreateDefaultReview) Validate() string {
 }
 
 func (c CreateDefaultReview) ToDefaultReviewModel() *defaultreview.DefaultReviewModel {
-	model := defaultreview.DefaultReviewModel{
+	model := &defaultreview.DefaultReviewModel{
 		Rate:        c.Rate,
 		Review:      c.Review,
 		Description: c.Description,
+		Order:       c.Order,
+		PK:          c.PK,
+		SK:          c.SK,
 	}
 	model.LoadKeys()
-	return &model
+	return model
 }
 
 func NewCreateDefaultReview(reqBody string) (*CreateDefaultReview, error) {

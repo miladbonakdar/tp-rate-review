@@ -6,12 +6,16 @@ import (
 	"github.com/miladbonakdar/tp-rate-review/constants"
 )
 
-type HashRange struct {
+type HashRange interface {
+	DynamoKeyAttributes() map[string]*dynamodb.AttributeValue
+}
+
+type HashRangeKey struct {
 	PK string `json:"pk"`
 	SK string `json:"sk"`
 }
 
-func (h HashRange) DynamoKeyAttributes() map[string]*dynamodb.AttributeValue {
+func (h HashRangeKey) DynamoKeyAttributes() map[string]*dynamodb.AttributeValue {
 	return map[string]*dynamodb.AttributeValue{
 		constants.HashKey: {
 			S: aws.String(h.PK),

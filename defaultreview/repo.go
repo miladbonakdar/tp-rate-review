@@ -22,15 +22,14 @@ func (drr *defaultReviewRepository) Add(review *DefaultReviewModel) error {
 	if err != nil {
 		return err
 	}
-	res, err := drr.db.PutItem(&dynamodb.PutItemInput{
+	_, err = drr.db.PutItem(&dynamodb.PutItemInput{
 		TableName: aws.String(drr.tableName),
 		Item:      obj,
 	})
 	if err != nil {
 		return err
 	}
-	review.Key.PK = res.Attributes[constants.HashKey].String()
-	review.Key.SK = res.Attributes[constants.RangeKey].String()
+
 	return nil
 }
 
