@@ -1,43 +1,30 @@
 package main
 
 import (
-	"bytes"
-	"context"
-	"encoding/json"
-
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
+	"github.com/miladbonakdar/tp-rate-review/defaultreview"
+	"github.com/miladbonakdar/tp-rate-review/models"
+	"github.com/miladbonakdar/tp-rate-review/utils"
 )
 
-// Response is of type APIGatewayProxyResponse since we're leveraging the
-// AWS Lambda Proxy Request functionality (default behavior)
-//
-// https://serverless.com/framework/docs/providers/aws/events/apigateway/#lambda-proxy-integration
-type Response events.APIGatewayProxyResponse
+func Handler(request events.APIGatewayProxyRequest) (utils.Response, error) {
+	paramPk := request.PathParameters["pk"]
+	paramSk := request.PathParameters["sk"]
 
-// Handler is our lambda handler invoked by the `lambda.Start` function call
-func Handler(ctx context.Context) (Response, error) {
-	var buf bytes.Buffer
+	key := models.HashRange{
+		PK: paramPk,
+		SK: paramSk,
+	}
 
-	body, err := json.Marshal(map[string]interface{}{
-		"message": "Go Serverless v1.0! Your function executed successfully!",
-	})
+	repo := defaultreview.NewRepo()
+
+	err := repo.Delete(key)
+
 	if err != nil {
-		return Response{StatusCode: 404}, err
+		return utils.NewUnhandledEvent(err.Error()), err
 	}
-	json.HTMLEscape(&buf, body)
-
-	resp := Response{
-		StatusCode:      200,
-		IsBase64Encoded: false,
-		Body:            buf.String(),
-		Headers: map[string]string{
-			"Content-Type":           "application/json",
-			"X-MyCompany-Func-Reply": "hello-handler",
-		},
-	}
-
-	return resp, nil
+	return utils.NewCompleteTextResponse("default review removed"), nil
 }
 
 func main() {

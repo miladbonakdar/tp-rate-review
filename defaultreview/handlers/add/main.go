@@ -12,7 +12,7 @@ import (
 
 func Handler(request events.APIGatewayProxyRequest) (utils.Response, error) {
 
-	defaultReviewRepo := defaultreview.New()
+	defaultReviewRepo := defaultreview.NewRepo()
 
 	req, err := dto.NewCreateDefaultReview(request.Body)
 

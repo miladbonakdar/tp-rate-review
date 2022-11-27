@@ -1,6 +1,7 @@
 package defaultreview
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -44,7 +45,7 @@ func (drr *defaultReviewRepository) Delete(key models.HashRange) error {
 	return err
 }
 
-func (drr *defaultReviewRepository) GetDefaultReviews() ([]*DefaultReviewModel, error) {
+func (drr *defaultReviewRepository) GetDefaultReviews(rate uint8) ([]*DefaultReviewModel, error) {
 	var queryInput = &dynamodb.QueryInput{
 		TableName: aws.String(drr.tableName),
 		KeyConditions: map[string]*dynamodb.Condition{
@@ -52,20 +53,25 @@ func (drr *defaultReviewRepository) GetDefaultReviews() ([]*DefaultReviewModel, 
 				ComparisonOperator: aws.String("EQ"),
 				AttributeValueList: []*dynamodb.AttributeValue{
 					{
-						S: aws.String(pk),
+						S: aws.String(fmt.Sprintf(pkFormat, rate)),
 					},
 				},
 			},
 		},
 	}
-	_, err := drr.db.Query(queryInput)
+	res, err := drr.db.Query(queryInput)
 	if err != nil {
 		return nil, err
 	}
-	return nil, nil
+
+	if res.Count == aws.Int64(0) {
+		return nil, nil
+	}
+
+	return NewDefaultReviewModelList(res.Items), nil
 }
 
-func New() DefaultReviewRepository {
+func NewRepo() DefaultReviewRepository {
 	return &defaultReviewRepository{
 		db:        db.NewDb(),
 		tableName: os.Getenv("DYNAMODB_TABLE"),

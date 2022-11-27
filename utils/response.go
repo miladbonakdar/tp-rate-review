@@ -49,3 +49,10 @@ func NewCompleteResponse(item interface{}) Response {
 		Headers:         defaultHeaders,
 	}
 }
+
+func NewCompleteTextResponse(message string) Response {
+	body := map[string]interface{}{
+		"message": message,
+	}
+	return NewCompleteResponse(body)
+}

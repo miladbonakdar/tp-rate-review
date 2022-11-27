@@ -1,3 +1,4 @@
 package defaultreview
 
-const pk = "default_rate"
+const pkFormat = "default_rate#%v"
+const skFormat = "review#%v-%s"

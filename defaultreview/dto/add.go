@@ -14,8 +14,8 @@ type CreateDefaultReview struct {
 }
 
 func (c CreateDefaultReview) Validate() string {
-	if c.Rate < 0 || c.Rate > 5 {
-		return "Rate is not valid, [0,5] range"
+	if c.Rate < 1 || c.Rate > 5 {
+		return "Rate is not valid, [1,5] range"
 	}
 	if c.Review == "" {
 		return "Review is empty"
