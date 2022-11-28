@@ -9,13 +9,13 @@ import (
 )
 
 func Handler(request events.APIGatewayProxyRequest) (utils.Response, error) {
-
+	utils.LogRequest(&request)
 	defaultReviewRepo := defaultreview.NewRepo()
 
 	req, err := dto.NewCreateDefaultReview(request.Body)
 
 	if err != nil {
-		return utils.NewBadRequestRes(err.Error()), nil
+		return utils.HandleFailOp(err)
 	}
 
 	if message := req.Validate(); message != "" {
@@ -25,7 +25,7 @@ func Handler(request events.APIGatewayProxyRequest) (utils.Response, error) {
 	model := req.ToDefaultReviewModel()
 	err = defaultReviewRepo.Add(model)
 	if err != nil {
-		return utils.NewUnhandledEvent(err.Error()), err
+		return utils.HandleFailOp(err)
 	}
 	resBody := dto.DefaultReviewDtoFromModel(model)
 	return utils.NewCompleteResponse(resBody), nil

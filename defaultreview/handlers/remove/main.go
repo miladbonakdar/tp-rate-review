@@ -9,6 +9,7 @@ import (
 )
 
 func Handler(request events.APIGatewayProxyRequest) (utils.Response, error) {
+	utils.LogRequest(&request)
 	paramPk := request.PathParameters["pk"]
 	paramSk := request.PathParameters["sk"]
 
@@ -22,8 +23,9 @@ func Handler(request events.APIGatewayProxyRequest) (utils.Response, error) {
 	err := repo.Delete(key)
 
 	if err != nil {
-		return utils.NewUnhandledEvent(err.Error()), err
+		return utils.HandleFailOp(err)
 	}
+
 	return utils.NewCompleteTextResponse("default review removed"), nil
 }
 

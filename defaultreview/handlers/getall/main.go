@@ -9,10 +9,11 @@ import (
 )
 
 func Handler(request events.APIGatewayProxyRequest) (utils.Response, error) {
+	utils.LogRequest(&request)
 	paramRate := request.PathParameters["rate"]
 	val, err := utils.ParseToUint8(paramRate)
 	if err != nil {
-		return utils.NewBadRequestRes(err.Error()), nil
+		return utils.HandleFailOp(err)
 	}
 
 	if val < 1 || val > 5 {
@@ -24,7 +25,7 @@ func Handler(request events.APIGatewayProxyRequest) (utils.Response, error) {
 	items, err := repo.GetDefaultReviews(val)
 
 	if err != nil {
-		return utils.NewUnhandledEvent(err.Error()), err
+		return utils.HandleFailOp(err)
 	}
 	res := dto.GetAllDefaultReviewsDtoFromModel(items)
 	return utils.NewCompleteResponse(res), nil

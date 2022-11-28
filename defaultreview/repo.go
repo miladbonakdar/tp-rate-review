@@ -8,6 +8,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/miladbonakdar/tp-rate-review/constants"
 	"github.com/miladbonakdar/tp-rate-review/db"
+	"github.com/miladbonakdar/tp-rate-review/fail"
 	"github.com/miladbonakdar/tp-rate-review/models"
 	"github.com/miladbonakdar/tp-rate-review/utils"
 )
@@ -20,14 +21,14 @@ type defaultReviewRepository struct {
 func (drr *defaultReviewRepository) Add(review *DefaultReviewModel) error {
 	obj, err := utils.MarshalDynamoObject(review)
 	if err != nil {
-		return err
+		return fail.NewFailByError(400, err, "Add defaultReviewRepository MarshalDynamoObject")
 	}
 	_, err = drr.db.PutItem(&dynamodb.PutItemInput{
 		TableName: aws.String(drr.tableName),
 		Item:      obj,
 	})
 	if err != nil {
-		return err
+		return fail.NewFailByError(400, err, "Add defaultReviewRepository PutItem")
 	}
 
 	return nil
@@ -41,7 +42,7 @@ func (drr *defaultReviewRepository) Delete(key models.HashRange) error {
 	}
 
 	_, err := drr.db.DeleteItem(input)
-	return err
+	return fail.NewFailByError(400, err, "Delete defaultReviewRepository")
 }
 
 func (drr *defaultReviewRepository) GetDefaultReviews(rate uint8) ([]*DefaultReviewModel, error) {
@@ -60,7 +61,7 @@ func (drr *defaultReviewRepository) GetDefaultReviews(rate uint8) ([]*DefaultRev
 	}
 	res, err := drr.db.Query(queryInput)
 	if err != nil {
-		return nil, err
+		return nil, fail.NewFailByError(400, err, "GetDefaultReviews defaultReviewRepository")
 	}
 
 	if res.Count == aws.Int64(0) {

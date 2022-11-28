@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 
 	"github.com/miladbonakdar/tp-rate-review/defaultreview"
+	"github.com/miladbonakdar/tp-rate-review/fail"
 )
 
 type CreateDefaultReview struct {
@@ -42,7 +43,7 @@ func NewCreateDefaultReview(reqBody string) (*CreateDefaultReview, error) {
 	var req CreateDefaultReview
 	err := json.Unmarshal([]byte(reqBody), &req)
 	if err != nil {
-		return nil, err
+		return nil, fail.NewFailByError(400, err, "NewCreateDefaultReview")
 	}
 	return &req, nil
 }
