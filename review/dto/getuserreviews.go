@@ -13,7 +13,7 @@ type GetUserReviewsDto struct {
 	AverageRate   uint8        `json:"averageRate"`
 }
 
-func GetUserReviewsDtoFromModel(items []*review.ReviewModel) *GetUserReviewsDto {
+func UserReviewsDtoFromModel(items []*review.ReviewModel) *GetUserReviewsDto {
 	length := len(items)
 	res := &GetUserReviewsDto{
 		Reviews:       make([]*ReviewDto, 0),

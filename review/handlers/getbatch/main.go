@@ -11,7 +11,7 @@ import (
 func Handler(request events.APIGatewayProxyRequest) (utils.Response, error) {
 	utils.LogRequest(&request)
 
-	req, err := dto.NewGetBatchReviews(request.Body)
+	req, err := dto.NewBatchReviews(request.Body)
 	if err != nil {
 		return utils.HandleFailOp(err)
 	}
@@ -26,7 +26,7 @@ func Handler(request events.APIGatewayProxyRequest) (utils.Response, error) {
 	if err != nil {
 		return utils.HandleFailOp(err)
 	}
-	res := dto.GetUserReviewsDtoFromModel(items)
+	res := dto.BatchReviewsDtoFromModel(items)
 	return utils.NewCompleteResponse(res), nil
 }
 

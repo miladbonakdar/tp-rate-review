@@ -22,7 +22,7 @@ func Handler(request events.APIGatewayProxyRequest) (utils.Response, error) {
 	if err != nil {
 		return utils.HandleFailOp(err)
 	}
-	res := dto.GetUserReviewsDtoFromModel(items)
+	res := dto.UserReviewsDtoFromModel(items)
 	return utils.NewCompleteResponse(res), nil
 }
 
