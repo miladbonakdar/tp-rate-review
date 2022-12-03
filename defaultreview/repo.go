@@ -42,7 +42,10 @@ func (drr *defaultReviewRepository) Delete(key models.HashRange) error {
 	}
 
 	_, err := drr.db.DeleteItem(input)
-	return fail.NewFailByError(400, err, "Delete defaultReviewRepository")
+	if err != nil {
+		return fail.NewFailByError(400, err, "Delete defaultReviewRepository")
+	}
+	return nil
 }
 
 func (drr *defaultReviewRepository) GetDefaultReviews(rate uint8) ([]*DefaultReviewModel, error) {

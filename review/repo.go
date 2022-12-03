@@ -42,7 +42,10 @@ func (drr *reviewRepository) Delete(key models.HashRange) error {
 	}
 
 	_, err := drr.db.DeleteItem(input)
-	return fail.NewFailByError(400, err, "Delete reviewRepository")
+	if err != nil {
+		return fail.NewFailByError(400, err, "Delete reviewRepository")
+	}
+	return nil
 }
 
 func (drr *reviewRepository) GetUserReviews(userId string) ([]*ReviewModel, error) {

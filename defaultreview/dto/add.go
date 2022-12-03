@@ -8,8 +8,6 @@ import (
 )
 
 type CreateDefaultReview struct {
-	PK          string `json:"pk"`
-	SK          string `json:"sk"`
 	Rate        uint8  `json:"rate"`
 	Order       int    `json:"order"`
 	Review      string `json:"review"`
@@ -32,8 +30,6 @@ func (c CreateDefaultReview) ToDefaultReviewModel() *defaultreview.DefaultReview
 		Review:      c.Review,
 		Description: c.Description,
 		Order:       c.Order,
-		PK:          c.PK,
-		SK:          c.SK,
 	}
 	model.LoadKeys()
 	return model

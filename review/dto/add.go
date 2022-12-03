@@ -9,8 +9,6 @@ import (
 )
 
 type CreateReview struct {
-	PK      string `json:"pk"`
-	SK      string `json:"sk"`
 	Rate    uint8  `json:"rate"`
 	Review  string `json:"review"`
 	Type    string `json:"type"`
