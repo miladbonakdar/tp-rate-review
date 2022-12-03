@@ -5,6 +5,6 @@ const (
 	DefaultReviewType        = "default"
 )
 
-const pkFormat = "review#%v"
-const skReviewFormat = "review#%v"
-const skCustomFormat = "custom#%v"
+const pkFormat = "review_%v"
+const skReviewFormat = "review_%v"
+const skCustomFormat = "custom_%v"

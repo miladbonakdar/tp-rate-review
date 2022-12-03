@@ -21,20 +21,6 @@ type ReviewModel struct {
 	Session string `json:"session,omitempty"`
 }
 
-// rate-review item :
-//     hashkey : review#{user-ulid}
-//     sort key : custom#{iso time stamp}
-//     sort key : review#{iso time stamp}
-//         rate: 1-5
-//         review: string
-//         from: user-ulid
-//         date: iso date string
-//         session: {session-id} can be null
-//
-// add user text review //custom
-// add user default review // review
-// get user reviews
-
 func (d *ReviewModel) LoadReviewKeys() {
 	d.PK = fmt.Sprintf(pkFormat, d.User)
 	d.SK = fmt.Sprintf(skReviewFormat, time.Now().Unix())
