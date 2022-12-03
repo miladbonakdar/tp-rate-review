@@ -28,7 +28,7 @@ func BatchReviewsDtoFromModel(items []*review.ReviewModel) *BatchReviewsDto {
 		Users: make([]*UserReviewDetail, 0),
 	}
 
-	var userReviews map[string]*userReviewDetailMapItem
+	userReviews := make(map[string]*userReviewDetailMapItem)
 
 	for i := 0; i < length; i++ {
 		if items[i] == nil {
