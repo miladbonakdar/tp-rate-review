@@ -77,7 +77,7 @@ functions:
     handler: bin/remove_review
     events:
       - httpApi:
-          path: /review
+          path: /review/{pk}/{sk}
           method: delete
           
 resources:
